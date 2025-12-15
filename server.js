@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+// Disable mongoose buffering globally to prevent timeout issues
+mongoose.set('bufferCommands', false);
+
 const app = express();
 
 // Middleware
@@ -23,9 +26,6 @@ const mongooseOptions = {
   serverSelectionTimeoutMS: 10000, // Increased to 10s
   socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
   maxPoolSize: 10, // Maintain up to 10 socket connections
-  // Note: minPoolSize removed for serverless compatibility
-  bufferMaxEntries: 0, // Disable mongoose buffering; throw immediately
-  bufferCommands: false, // Disable mongoose buffering
   connectTimeoutMS: 10000, // How long to wait for initial connection
 };
 
